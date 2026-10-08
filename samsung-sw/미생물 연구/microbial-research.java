@@ -1,4 +1,3 @@
-package Year2023;
 
 import java.io.*;
 import java.lang.*;
