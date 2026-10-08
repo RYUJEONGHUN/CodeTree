@@ -32,7 +32,7 @@ class Point{
     }
 }
 
-public class Misangmul {
+public class Main {
     static ArrayList<Virus> vlist = new ArrayList<Virus>();
     static Virus[][] arr;
     static int[] dc= {0,1,0,-1};
