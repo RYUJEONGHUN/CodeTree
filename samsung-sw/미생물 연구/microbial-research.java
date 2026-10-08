@@ -1,4 +1,4 @@
-
+package Year2023;
 
 import java.io.*;
 import java.lang.*;
@@ -32,7 +32,7 @@ class Point{
     }
 }
 
-public class Main {
+public class Misangmul {
     static ArrayList<Virus> vlist = new ArrayList<Virus>();
     static Virus[][] arr;
     static int[] dc= {0,1,0,-1};
