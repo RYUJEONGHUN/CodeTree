@@ -131,35 +131,35 @@ public class Main {
             }
         }
         
+         int[][] minimum = new int[N+1][N+1];
+         Queue<Point> temp = new LinkedList<Point>(); //기준점으로 최단거리배열 구하기
+         int[][] tempvisited = new int[N+1][N+1];
+         
+         tempvisited[sr][sc]=1;
+         temp.add(new Point(0,sr,sc));
+         
+         while(!temp.isEmpty()) {
+             Point cp = temp.poll();
+             
+             int d= cp.length;
+             minimum[cp.r][cp.c]=d;
+             
+             for(int i=1;i<=4;i++) {
+                 int tr = cp.r+dr[i];
+                 int tc = cp.c+dc[i];
+                 
+                 if(tr>=1 && tr<=N && tc>=1 && tc<=N && arr[tr][tc]==0 && tempvisited[tr][tc]==0) {
+                     tempvisited[tr][tc]=1;
+                     temp.add(new Point(d+1,tr,tc));
+                 }
+             }
+         }
+        
         ArrayList<Point> plengthlist = new ArrayList<Point>(); //후보리스트
 
         for(Point p : plist) {
-            
-            Queue<Point> temp = new LinkedList<Point>(); //후보 별 최단거리 구하기
-            int[][] tempvisited = new int[N+1][N+1];
-            
-            tempvisited[p.r][p.c]=1;
-            temp.add(p);
-            
-            while(!temp.isEmpty()) {
-                Point cp = temp.poll();
-                
-                int d= cp.length;
-                
-                if(cp.r==sr && cp.c==sc) {
-                    plengthlist.add(new Point(d,p.r,p.c));
-                    break;
-                }
-                
-                for(int i=1;i<=4;i++) {
-                    int tr = cp.r+dr[i];
-                    int tc = cp.c+dc[i];
-                    
-                    if(tr>=1 && tr<=N && tc>=1 && tc<=N && arr[tr][tc]==0 && tempvisited[tr][tc]==0) {
-                        tempvisited[tr][tc]=1;
-                        temp.add(new Point(d+1,tr,tc));
-                    }
-                }
+            if(minimum[p.r][p.c]>0) {
+                plengthlist.add(new Point(minimum[p.r][p.c],p.r,p.c));
             }
         }
         
