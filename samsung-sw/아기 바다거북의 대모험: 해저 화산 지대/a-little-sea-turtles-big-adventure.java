@@ -38,14 +38,18 @@ class Point{
     int d;//첫 방향
     int r;
     int c;
-    
-    public Point(int d,int r,int c) {
+    int length;
+    public Point(int d,int r,int c,int length) {
         this.d=d;
         this.r=r;
         this.c=c;
+        this.length=length;
     }
     public int getd(){
         return d;
+    }
+    public int getlength() {
+        return length;
     }
 }
 
@@ -162,7 +166,7 @@ public class Main {
             
             if(tr>=0 && tr<=N-1 && tc>=0 && tc<=N-1 && ocean[tr][tc]==0 && visited[tr][tc]==0) {
                 visited[tr][tc]=1;
-                q.add(new Point(i,tr,tc));
+                q.add(new Point(i,tr,tc,0));
             }
         } // 초기 세팅
 
@@ -183,7 +187,7 @@ public class Main {
                 
                 if(tr>=0 && tr<=N-1 && tc>=0 && tc<=N-1 && ocean[tr][tc]==0 && visited[tr][tc]==0) {
                     visited[tr][tc]=1;
-                    q.add(new Point(d,tr,tc));
+                    q.add(new Point(d,tr,tc,cn.length+1));
                 }
             }
         }
@@ -192,7 +196,8 @@ public class Main {
             return -1;
         }else {
             bfssuccesslist.sort(
-                    Comparator.comparing(Point::getd)
+                    Comparator.comparing(Point::getlength)
+                    .thenComparing(Point::getd)
             );
             
             return bfssuccesslist.get(0).d;
