@@ -106,10 +106,8 @@ public class Main {
 
         
         for(int i=1;i<=100;i++) {
-            //System.out.println("turn"+i);
 
-            tutlemove();
-            checkexit(i);
+            tutlemove(i);
             if(checkAllexit()) {
                 break;
             }
@@ -130,7 +128,7 @@ public class Main {
     
     }
     
-    public static void tutlemove() {
+    public static void tutlemove(int i) {
         for(Tutle t : tutlearr) {
             
             if(t.dead || t.exit) {
@@ -149,7 +147,15 @@ public class Main {
                 ocean[tr][tc]=2;
                 t.r=tr;
                 t.c=tc;
+                
+                if(t.r==N-1 && t.c==N-1) {
+                    t.exit=true;
+                    t.exitturn=i;
+                    ocean[t.r][t.c]=0;
+                    //System.out.println(t.exitturn);
+                }
             }
+            
         }
         
         return;
@@ -210,12 +216,7 @@ public class Main {
             if(t.exit) {
                 continue;
             }else {
-                if(t.r==N-1 && t.c==N-1) {
-                    t.exit=true;
-                    t.exitturn=i;
-                    ocean[t.r][t.c]=0;
-                    //System.out.println(t.exitturn);
-                }
+                
             }
         }
     }
@@ -256,13 +257,13 @@ public class Main {
         }
         
         for(Tutle t : tutlearr) {
-            for(int i=0;i<=N-1;i++) {
-                for(int j=0;j<=N-1;j++) {
-                    if(t.r == i && t.c == j && cucumedfirepress[i][j]>=20) {
-                        t.dead=true;
-                        ocean[i][j]=3;
-                    }
-                }
+            if(t.dead || t.exit) {
+                continue;
+            }
+            
+            if(cucumedfirepress[t.r][t.c]>=20) {
+                t.dead =true;
+                ocean[t.r][t.c]=3;
             }
         }
     }
@@ -300,7 +301,12 @@ public class Main {
         int cr=r+dr[i];
         int cc=c+dc[i];
         if(cr>=0 && cr<=N-1 && cc>=0 && cc<=N-1 && ocean[cr][cc]!=1 && damage>0) {
-            dfs(i,cr,cc,(int)Math.floor(damage/2));
+            int newdamage = (int)Math.floor(damage/2);
+            
+            if(newdamage>0) {
+                dfs(i,cr,cc,(int)Math.floor(damage/2));
+
+            }
         }
         return;
     }
