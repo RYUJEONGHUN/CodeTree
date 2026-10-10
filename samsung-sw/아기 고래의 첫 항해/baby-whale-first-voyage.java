@@ -190,6 +190,7 @@ public class Main {
             
             if((w.r==finalp.r) && (w.c == finalp.c)){
                 result = new Whale(w.r,w.c,w.d);
+                break;
             }
             for(int i=1;i<=4;i++) {
                 int tr = w.r+ dr[lastarr.get(i)];
